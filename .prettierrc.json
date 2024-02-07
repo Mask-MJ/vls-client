@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "semi": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "printWidth": 100,
+  "trailingComma": "none",
+  "proseWrap": "never",
+  "htmlWhitespaceSensitivity": "strict",
+  "endOfLine": "auto",
+  "importOrder": [
+    "<TYPES>",
+    "<TYPES>^[@/types]",
+    "",
+    "vue",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^[./]"
+  ],
+  "plugins": [
+    "@ianvs/prettier-plugin-sort-imports"
+  ]
+}
