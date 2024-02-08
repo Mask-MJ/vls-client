@@ -1,23 +1,27 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { subscribeThemeStore } from '@/settings'
+import { getAppEnvConfig } from '@/utils'
+import { dateZhCN, zhCN } from 'naive-ui'
+
+const { VITE_GLOB_APP_TITLE } = getAppEnvConfig()
+useHead({ title: VITE_GLOB_APP_TITLE })
+
+const theme = useThemeStore()
+subscribeThemeStore()
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <n-config-provider
+    :theme="theme.naiveTheme"
+    :theme-overrides="theme.naiveThemeOverrides"
+    :locale="zhCN"
+    :date-locale="dateZhCN"
+    class="h-full"
+  >
+    <naive-provider>
+      <router-view />
+    </naive-provider>
+  </n-config-provider>
 </template>
 
 <style scoped>

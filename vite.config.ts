@@ -9,7 +9,7 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
-import { ClientSideLayout } from 'vite-plugin-vue-layouts'
+import Layouts from 'vite-plugin-vue-layouts'
 import Unocss from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig, loadEnv } from 'vite'
@@ -43,7 +43,8 @@ export default defineConfig(({ mode }) => {
         include: [path.resolve(process.cwd(), 'src/locales/lang/**')]
       }),
       Unocss(),
-      ClientSideLayout({ layoutDir: 'src/layouts', defaultLayout: 'default', importMode: 'async' }),
+      Layouts(),
+      // ClientSideLayout({ layoutDir: 'src/layouts', defaultLayout: 'default', importMode: 'async' }),
       AutoImport({
         imports: [
           'vue',

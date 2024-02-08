@@ -14,12 +14,7 @@ export default defineConfig({
   },
   presets: [
     presetUno({ dark: 'class' }),
-    presetIcons({
-      warn: true,
-      extraProperties: {
-        display: 'inline-block'
-      }
-    })
+    presetIcons({ warn: true, extraProperties: { display: 'inline-block' } })
   ],
   shortcuts: {
     'wh-full': 'w-full h-full',
