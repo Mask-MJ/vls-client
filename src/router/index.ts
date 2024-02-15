@@ -3,7 +3,7 @@ import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 
-// import { setupRouterGuard } from './permissionGuard'
+import { setupRouterGuard } from './permissionGuard'
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -14,5 +14,5 @@ export const router = createRouter({
 
 export function setupRouter(app: App) {
   app.use(router)
-  // setupRouterGuard(router)
+  setupRouterGuard(router)
 }

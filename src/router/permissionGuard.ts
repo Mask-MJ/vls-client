@@ -1,6 +1,8 @@
 import type { Router } from 'vue-router/auto'
 
-const WHITE_LIST = ['/login', '/404']
+import { PageEnum } from '@/settings'
+
+const WHITE_LIST: string[] = [PageEnum.BASE_LOGIN]
 function createPageGuard(router: Router) {
   const controller = new AbortController()
 
@@ -22,11 +24,20 @@ function createPermissionGuard(router: Router) {
     // 没有token
     if (!token) {
       if (WHITE_LIST.includes(to.path)) return true
-      return { path: '/login', query: { ...to.query, redirect: to.path } }
+      return { path: PageEnum.BASE_LOGIN, query: { ...to.query, redirect: to.path } }
     }
 
     // 有token
-    if (to.path === '/login') return { path: '/' }
+    // 判断是否有用户信息和路由
+    // if (Object.keys(userStore.getUserInfo).length === 0) {
+    //   await userStore.getUserInfoAction()
+    // }
+    if (!userStore.isDynamicAddedRoute) {
+      await userStore.getRoutesAction()
+    }
+    if (to.path === PageEnum.BASE_LOGIN) return { path: PageEnum.BASE_HOME }
+
+    if (to.path === '/') return { path: PageEnum.BASE_HOME }
 
     if (WHITE_LIST.includes(to.path)) return true
 

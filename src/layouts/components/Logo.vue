@@ -8,7 +8,7 @@ const { t } = useI18n()
 <template>
   <router-link
     :to="PageEnum.BASE_HOME"
-    class="flex-center w-full whitespace-nowrap overflow-hidden"
+    class="flex-center w-full whitespace-nowrap overflow-hidden border-b-1 border-coolgray-200"
   >
     <n-image width="40" src="/logo.svg" />
     <h2

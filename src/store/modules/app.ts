@@ -1,5 +1,3 @@
-import type { RouteRecordRaw } from 'vue-router/auto'
-
 import { defineStore } from 'pinia'
 
 export interface AppState {
@@ -11,10 +9,6 @@ export interface AppState {
   siderCollapse: boolean
   /** vertical-mix模式下 侧边栏的固定状态 */
   mixSiderFixed: boolean
-  // 后台返回的路由列表
-  backendRouteList: RouteRecordRaw[]
-  // 缓存路由页面
-  cacheRoutes: string[]
 }
 
 export const useAppStore = defineStore('app-store', {
@@ -22,28 +16,20 @@ export const useAppStore = defineStore('app-store', {
     reloadFlag: true,
     settingDrawerVisible: false,
     siderCollapse: false,
-    mixSiderFixed: false,
-    backendRouteList: [],
-    cacheRoutes: []
+    mixSiderFixed: false
   }),
   actions: {
     /**
      * 重载页面
      * @param duration - 重载的延迟时间(ms)
      */
-    async reloadPage(duration = 0) {
+    async reloadPage(duration = 100) {
       this.reloadFlag = false
       await nextTick()
-      if (duration) {
-        setTimeout(() => {
-          this.reloadFlag = true
-        }, duration)
-      } else {
-        this.reloadFlag = true
-      }
       setTimeout(() => {
+        this.reloadFlag = true
         document.documentElement.scrollTo({ left: 0, top: 0 })
-      }, 100)
+      }, duration)
     },
     /** 打开设置抽屉 */
     openSettingDrawer() {
@@ -72,14 +58,6 @@ export const useAppStore = defineStore('app-store', {
     /** 设置 vertical-mix模式下 侧边栏的固定状态 */
     toggleMixSiderFixed() {
       this.mixSiderFixed = !this.mixSiderFixed
-    },
-    /** 设置路由 */
-    setBackendRouteList(list: RouteRecordRaw[]) {
-      this.backendRouteList = list
-    },
-    /** 设置缓存路由 */
-    setCacheRoutes(list: string[]) {
-      this.cacheRoutes = list
     }
   }
 })
