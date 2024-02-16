@@ -4,7 +4,7 @@ import type { RemovableRef } from '@vueuse/core'
 
 import { doLogout, getUserInfo, login } from '@/api/user'
 import { router } from '@/router'
-import { CACHE_ROUTES, PageEnum, TOKEN_KEY, USER_INFO_KEY } from '@/settings'
+import { CACHE_ROUTES, PageEnum, TOKEN_KEY, USER_INFO_KEY } from '@/settings/enums'
 import { defineStore } from 'pinia'
 
 interface UserState {

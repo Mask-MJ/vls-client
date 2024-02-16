@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router/auto'
 
-import { PageEnum } from '@/settings'
+import { PageEnum } from '@/settings/enums'
 
 const WHITE_LIST: string[] = [PageEnum.BASE_LOGIN]
 function createPageGuard(router: Router) {

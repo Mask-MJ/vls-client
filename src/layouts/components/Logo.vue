@@ -1,5 +1,5 @@
 <script setup lang="ts" name="LayoutLogo">
-import { PageEnum } from '@/settings'
+import { PageEnum } from '@/settings/enums'
 
 defineProps({ showTitle: { type: Boolean, default: true } })
 const { t } = useI18n()
@@ -21,3 +21,4 @@ const { t } = useI18n()
 </template>
 
 <style scoped></style>
+@/settings/enums

@@ -4,10 +4,10 @@ import type {
   ThemeHorizontalMenuPosition,
   ThemeLayoutMode,
   ThemeTabMode
-} from '@/settings'
+} from '@/settings/theme'
 import type { RemovableRef } from '@vueuse/core'
 
-import { THEME_SETTINGS } from '@/settings'
+import { THEME_SETTINGS } from '@/settings/enums'
 import { darkTheme } from 'naive-ui'
 import { defineStore } from 'pinia'
 

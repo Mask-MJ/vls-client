@@ -7,7 +7,6 @@ import { useBasicLayout } from './components/hooks'
 const app = useAppStore()
 const theme = useThemeStore()
 const { headerProps } = useBasicLayout()
-console.log('headerProps', headerProps)
 const width = computed(() => theme.sider.width)
 const collapsedWidth = computed(() => theme.sider.collapsedWidth)
 const siderCollapse = computed(() => app.siderCollapse)

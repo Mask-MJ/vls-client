@@ -9,8 +9,6 @@ const theme = useThemeStore()
 const user = useUserStore()
 
 function getTopLevelMenu(path: string, routes: RouteRecordRaw[]): RouteRecordRaw | undefined {
-  console.log('path', path)
-  console.log('routes', routes)
   return routes.find((item) => {
     if (item.path === path) return true
     if (Array.isArray(item.children)) {
@@ -36,7 +34,6 @@ function generateBreadcrumbs(routes: RouteRecordRaw[]): DropdownOption[] {
 
 const breadcrumbs = computed(() => {
   const topLevelMenu = getTopLevelMenu(route.path, user.backendRouteList)
-  console.log('topLevelMenu', topLevelMenu)
   // 获取当前路由菜单
   if (topLevelMenu) {
     if (topLevelMenu.children) {

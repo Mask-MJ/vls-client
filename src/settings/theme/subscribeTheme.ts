@@ -2,6 +2,7 @@ import type { GlobalThemeOverrides } from 'naive-ui'
 
 import { useElementSize } from '@vueuse/core'
 import { effectScope, onScopeDispose, watch } from 'vue'
+import { getColorPalettes, getRgbOfColor } from '@/utils'
 import { kebabCase } from 'lodash-es'
 import { useOsTheme } from 'naive-ui'
 
@@ -89,7 +90,21 @@ function addThemeCssVarsToHtml(themeVars: ThemeVars) {
   const keys = Object.keys(themeVars) as ThemeVarsKeys[]
   const style: string[] = []
   keys.forEach((key) => {
-    style.push(`--${kebabCase(key)}: ${themeVars[key]}`)
+    const color = themeVars[key]
+
+    if (color) {
+      const { r, g, b } = getRgbOfColor(color)
+      style.push(`--${kebabCase(key)}: ${r} ${g} ${b}`)
+
+      if (key === 'primaryColor') {
+        const colorPalettes = getColorPalettes(color)
+
+        colorPalettes.forEach((palette, index) => {
+          const { r: pR, g: pG, b: pB } = getRgbOfColor(palette)
+          style.push(`--${kebabCase(key)}${index + 1}: ${pR} ${pG} ${pB}`)
+        })
+      }
+    }
   })
   const styleStr = style.join(';')
   document.documentElement.style.cssText += styleStr

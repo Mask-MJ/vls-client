@@ -1,12 +1,12 @@
 export interface RegisterParams {
-  username: string
+  account: string
   password: string
   nickname?: string
   roles?: string[]
 }
 
 export interface LoginParams {
-  username: string
+  account: string
   password: string
 }
 
@@ -17,7 +17,7 @@ export interface LoginResult {
 
 export interface UserInfo {
   id: number
-  username: string
+  account: string
   nickname?: string
   avatar?: string
   status?: number
