@@ -51,6 +51,7 @@ const getSchema = computed((): FormSchema[] => {
       }
     }
   }
+  // console.log('schemas', schemas)
   if (unref(getProps).formAction.show) {
     return schemas.filter((schema) => schema.component !== 'NDivider')
   } else {
@@ -58,8 +59,6 @@ const getSchema = computed((): FormSchema[] => {
   }
 })
 
-// 获取需要展示的 schema
-const schemas = computed(() => getSchema.value.filter((item) => getShow(item).isIfShow))
 // 获取绑定到 n-grid 上的值
 const getBindGridValue = computed(() => getProps.value.formGrid)
 
@@ -158,7 +157,7 @@ const getBindComponentValue = computed(() => {
 const getBindActionValue = computed(() => {
   const { formAction, formGrid, formItem } = getProps.value
   return {
-    schemas: schemas.value,
+    schemas: getSchema.value.filter((item) => getShow(item).isIfShow),
     formGrid,
     formItem,
     formAction: formAction as FormAction
