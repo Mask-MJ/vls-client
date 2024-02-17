@@ -100,11 +100,8 @@ const getBindComponentValue = computed(() => {
   propsData.formValues = getValues.value
 
   let value = 'value'
-
   if (isTree) {
     value = 'checkedKeys'
-  } else if (component === 'NDatePicker' && componentProps?.valueFormat) {
-    value = 'formattedValue'
   } else {
     value = 'value'
   }

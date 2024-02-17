@@ -59,8 +59,7 @@ const getSchema = computed((): FormSchema[] => {
 })
 
 // 获取需要展示的 schema
-const schemas = computed(() => getProps.value.schemas?.filter((item) => getShow(item).isIfShow))
-
+const schemas = computed(() => unref(getProps).schemas?.filter((item) => getShow(item).isIfShow))
 // 获取绑定到 n-grid 上的值
 const getBindGridValue = computed(() => getProps.value.formGrid)
 
@@ -159,7 +158,7 @@ const getBindComponentValue = computed(() => {
 const getBindActionValue = computed(() => {
   const { formAction, formGrid, formItem } = getProps.value
   return {
-    schemas: getSchema.value.filter((item) => getShow(item).isIfShow),
+    schemas: schemas.value,
     formGrid,
     formItem,
     formAction: formAction as FormAction
@@ -214,17 +213,17 @@ watch(
 )
 
 watch(
-  getProps,
-  (props) => {
+  () => getSchema.value,
+  (schema) => {
     if (unref(isInitedDefaultRef)) {
       return
     }
-    if (props.schemas?.length) {
+    if (schema?.length) {
       initDefault()
       isInitedDefaultRef.value = true
     }
   },
-  { deep: true, immediate: true }
+  { deep: true }
 )
 
 onMounted(() => {

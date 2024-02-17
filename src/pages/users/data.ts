@@ -6,7 +6,8 @@ import { updateUser } from '@/api/user'
 import { NPopconfirm, NSwitch } from 'naive-ui'
 
 export const schemas: FormSchema[] = [
-  { path: 'account', label: '用户名称', component: 'NInput', span: 8 },
+  { path: 'account', label: '用户账号', component: 'NInput', span: 8 },
+  { path: 'nickname', label: '用户昵称', component: 'NInput', span: 8 },
   {
     path: 'status',
     label: '状态',
@@ -18,6 +19,15 @@ export const schemas: FormSchema[] = [
       ]
     },
     span: 8
+  },
+  {
+    path: '[beginTime, endTime]',
+    component: 'NDatePicker',
+    label: '创建时间',
+    span: 16,
+    componentProps: {
+      type: 'datetimerange'
+    }
   }
 ]
 

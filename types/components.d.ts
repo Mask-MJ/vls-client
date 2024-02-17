@@ -14,6 +14,7 @@ declare module 'vue' {
     AutoComplete: typeof import('./../src/components/Form/components/AutoComplete.vue')['default']
     DarkModeContainer: typeof import('./../src/components/Common/DarkModeContainer.vue')['default']
     Form: typeof import('./../src/components/Form/index.vue')['default']
+    Form2: typeof import('./../src/components/Form2/index.vue')['default']
     FormAction: typeof import('./../src/components/Form/components/FormAction.vue')['default']
     FormItemComponent: typeof import('./../src/components/Form/components/FormItemComponent.vue')['default']
     HelloWorld: typeof import('./../src/components/HelloWorld.vue')['default']
