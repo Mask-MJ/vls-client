@@ -21,18 +21,22 @@ export interface UserInfo {
   nickname?: string
   avatar?: string
   status?: number
-  roles: string[]
+  roles: Role[]
   permissions: string[]
   createTime: string
   updateTime?: string
 }
 
-export interface ChangeStatusParams {
+export interface Role {
   id: number
+  name: string
+  remark: string
+  roleKey: string
+  sort: number
   status: number
 }
 
-export interface ResetPasswordParams {
-  id: number
-  password: string
+export interface SearchParams {
+  status: number
+  account: string
 }

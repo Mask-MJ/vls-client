@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { UserInfo } from '@/api/user.type'
 
-import { createUser, getUserDetail, updateUser } from '@/api/user'
+import { createUser, updateUser } from '@/api/user'
 import { useForm } from '@/components/Form'
 import { useModalInner } from '@/components/Modal'
 
@@ -14,10 +14,9 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
 })
 
 const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: UserInfo) => {
-  setModalProps({ title: data.id ? '编辑账号' : '新增账号' })
   if (data.id) {
-    const result = await getUserDetail(data.id)
-    setPathsValue(result)
+    setModalProps({ title: '编辑账号' })
+    setPathsValue(data)
   }
 })
 
@@ -35,7 +34,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <Modal class="!w-200" @register="registerModal" @positive-click="handleSubmit">
+  <Modal title="新增账号" class="!w-120" @register="registerModal" @positive-click="handleSubmit">
     <Form @register="registerForm" />
   </Modal>
 </template>

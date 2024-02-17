@@ -2,7 +2,7 @@ import type { RouteRecordRaw } from 'vue-router/auto'
 import type { LoginParams, UserInfo } from '@/api/user.type'
 import type { RemovableRef } from '@vueuse/core'
 
-import { doLogout, getUserInfo, login } from '@/api/user'
+import { getUserInfo, login } from '@/api/user'
 import { router } from '@/router'
 import { CACHE_ROUTES, PageEnum, TOKEN_KEY, USER_INFO_KEY } from '@/settings/enums'
 import { defineStore } from 'pinia'
@@ -62,7 +62,7 @@ export const useUserStore = defineStore('user-store', {
     },
     async logout() {
       if (this.getToken) {
-        await doLogout()
+        // await doLogout()
       }
       this.setToken()
       this.setUserInfo()

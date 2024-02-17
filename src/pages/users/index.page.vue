@@ -3,15 +3,12 @@ import type { UserInfo } from '@/api/user.type'
 
 import ResetModal from './modal/ResetModal.vue'
 import SetModal from './modal/SetModal.vue'
-import { deleteUser, getUsersList } from '@/api/user'
+import { deleteUser, getUserDetail, getUsersList } from '@/api/user'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
 
 import { columns, schemas } from './data'
 
-const searchInfo = reactive({})
-
-const router = useRouter()
 const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerResetModal, { openModal: openResetModel }] = useModal()
 
@@ -20,7 +17,6 @@ const [registerTable, { reload }] = useTable({
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: { labelWidth: 100, schemas }, // 搜索表单配置
-  searchInfo,
   bordered: true,
   rowKey: (rowData) => rowData.id,
   actionColumn: {
@@ -31,16 +27,9 @@ const [registerTable, { reload }] = useTable({
         actions: [
           {
             type: 'edit',
-            onClick: () => openSetModel(true, { id: row.id })
-          },
-          {
-            icon: 'i-ant-design:user-add-outlined',
-            tooltipProps: { content: '分配角色' },
-            buttonProps: {
-              type: 'warning',
-              onClick: () => {
-                router.push(`/system/distribution/${row.id}`)
-              }
+            onClick: async () => {
+              const result = await getUserDetail(row.id)
+              return openSetModel(true, result)
             }
           },
           {
@@ -48,9 +37,7 @@ const [registerTable, { reload }] = useTable({
             tooltipProps: { content: '重置密码' },
             buttonProps: {
               type: 'success',
-              onClick: () => {
-                openResetModel(true, { id: row.id })
-              }
+              onClick: () => openResetModel(true, { id: row.id })
             }
           },
           {

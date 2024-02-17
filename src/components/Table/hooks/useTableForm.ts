@@ -1,17 +1,17 @@
-import type { BasicTableProps, FetchParams } from '../types';
-import type { ComputedRef, Slots } from 'vue';
-import type { BasicFormProps } from '@/components/Form';
+import type { BasicTableProps, FetchParams } from '../types'
+import type { ComputedRef, Slots } from 'vue'
+import type { BasicFormProps } from '@/components/Form'
 
-import { isFunction } from 'lodash-es';
+import { isFunction } from 'lodash-es'
 
 export function useTableForm(
   propsRef: ComputedRef<BasicTableProps>,
   slots: Slots,
-  fetch: (opt?: FetchParams | undefined) => Promise<void>,
-  getLoading: ComputedRef<boolean | undefined>,
+  fetch: (opt?: FetchParams) => Promise<void>,
+  getLoading: ComputedRef<boolean | undefined>
 ) {
   const getFormProps = computed((): Partial<BasicFormProps> => {
-    const { formConfig } = unref(propsRef);
+    const { formConfig } = unref(propsRef)
     return {
       formAction: {
         /** 是否显示操作按钮组 */
@@ -23,37 +23,37 @@ export function useTableForm(
         /** 提交按钮属性 */
         submitButtonOptions: { loading: unref(getLoading), show: true, label: '提交' },
         /** 当开启折叠时,是否显示收起展开按钮 */
-        showAdvancedButton: true,
+        showAdvancedButton: true
       },
       formGrid: { cols: 24, collapsed: true, collapsedRows: 2 },
-      ...formConfig,
-    };
-  });
+      ...formConfig
+    }
+  })
 
   const getFormSlotKeys: ComputedRef<string[]> = computed(() => {
-    const keys = Object.keys(slots);
+    const keys = Object.keys(slots)
     return keys
       .map((item) => (item.startsWith('form-') ? item : null))
-      .filter((item) => !!item) as string[];
-  });
+      .filter((item) => !!item) as string[]
+  })
 
   function replaceFormSlotKey(key: string) {
-    if (!key) return '';
-    return key?.replace?.(/form\-/, '') ?? '';
+    if (!key) return ''
+    return key?.replace?.(/form\\-/, '') ?? ''
   }
 
   function handleSearchInfoChange(info: Recordable) {
-    const { handleSearchInfoFn } = unref(propsRef);
+    const { handleSearchInfoFn } = unref(propsRef)
     if (handleSearchInfoFn && isFunction(handleSearchInfoFn)) {
-      info = handleSearchInfoFn(info) || info;
+      info = handleSearchInfoFn(info) || info
     }
-    fetch({ searchInfo: info, page: 1 });
+    fetch({ searchInfo: info, page: 1 })
   }
 
   return {
     getFormProps: getFormProps as any,
     replaceFormSlotKey,
     getFormSlotKeys,
-    handleSearchInfoChange,
-  };
+    handleSearchInfoChange
+  }
 }

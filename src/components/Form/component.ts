@@ -24,7 +24,9 @@ import type { FormActionType, FormSchema } from '@/components/Form/types'
 
 interface NInput {
   component: 'NInput'
-  componentProps?: InputProps
+  componentProps?:
+    | InputProps
+    | ((arg: { schema: FormSchema; formModel: any; formActionType: FormActionType }) => InputProps)
 }
 
 interface NIconPicker {

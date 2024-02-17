@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { resetPassword } from '@/api/user'
+import { updateUser } from '@/api/user'
 import { useForm } from '@/components/Form'
 import { useModalInner } from '@/components/Modal'
 
@@ -17,8 +17,8 @@ const handleSubmit = async () => {
   try {
     await validate()
     const result = getPathsValue()
-    await resetPassword(result)
-    window.$message.success(`修改成功，新密码是：${result.password}`)
+    await updateUser(result)
+    window.$message.success(`修改成功`)
     closeModal()
   } catch {
     window.$message.error('操作失败')
