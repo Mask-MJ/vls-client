@@ -4,14 +4,14 @@ import { useBasicLayout } from '@/layouts/components/hooks'
 
 import {
   Breadcrumb,
-  // FullScreen,
+  FullScreen,
   // HeaderMenu,
-  MenuCollapse
-  // SettingButton,
-  // SystemMessage,
-  // ThemeMode,
-  // ToggleLang,
-  // UserAvatar
+  MenuCollapse,
+  SettingButton,
+  SystemMessage,
+  ThemeMode,
+  ToggleLang,
+  UserAvatar
 } from './components'
 
 defineProps({
@@ -46,12 +46,12 @@ const height = computed(() => `${header.value.height}px`)
     </div>
     <!-- <HeaderMenu v-else /> -->
     <div class="flex justify-end h-full">
-      <!-- <FullScreen />
+      <FullScreen />
       <ThemeMode />
       <ToggleLang />
       <SystemMessage />
       <UserAvatar />
-      <SettingButton /> -->
+      <SettingButton />
     </div>
   </DarkModeContainer>
 </template>

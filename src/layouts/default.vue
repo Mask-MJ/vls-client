@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LayoutContent from './components/Content.vue'
 import Header from './components/Header/index.vue'
 import Sider from './components/Sider/index.vue'
 
@@ -35,7 +36,7 @@ const siderCollapse = computed(() => app.siderCollapse)
         content-style="height: 100%"
         :native-scrollbar="false"
       >
-        <router-view />
+        <LayoutContent />
       </n-layout-content>
     </n-layout>
   </n-layout>

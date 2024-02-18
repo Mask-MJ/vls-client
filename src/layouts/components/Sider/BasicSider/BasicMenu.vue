@@ -13,7 +13,7 @@ const expandedKeys = ref<string[]>([])
 const menuOptions = computed(() => {
   return userStore.backendRouteList.map((item) => {
     return {
-      key: item.name,
+      key: item.path,
       label: () => h(RouterLink, { to: { path: item.path } }, { default: () => item.meta?.title }),
       icon: () => h('i', { class: item.meta?.icon })
     }
