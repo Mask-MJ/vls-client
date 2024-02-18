@@ -1,5 +1,7 @@
 import type { FormSchema } from '@/components/Form'
 
+import { getRolesList } from '@/api/role'
+
 export const schemas: FormSchema[] = [
   { path: 'id', component: 'NInputNumber', show: false },
   {
@@ -39,13 +41,13 @@ export const schemas: FormSchema[] = [
   {
     path: 'roles',
     label: '角色',
-    component: 'NSelect',
+    component: 'ApiSelect',
     componentProps: {
+      immediate: true,
+      api: getRolesList,
       multiple: true,
-      options: [
-        { label: '管理员', value: 1 },
-        { label: '普通用户', value: 2 }
-      ]
+      labelField: 'name',
+      valueField: 'id'
     }
   },
   {

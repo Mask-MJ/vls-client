@@ -1,21 +1,21 @@
 <script setup lang="ts">
-  import { ACTION_SETTINGS } from '../constants';
+import { ACTION_SETTINGS } from '../constants'
 
-  const emits = defineEmits(['tableAction']);
-  const props = defineProps({
-    striped: { type: Boolean },
-    size: { type: String },
-  });
+const emits = defineEmits(['tableAction'])
+const props = defineProps({
+  striped: { type: Boolean },
+  size: { type: String }
+})
 
-  const tableStriped = computed(() => String(props.striped));
-  const tableSize = computed(() => props.size);
-  const reload = () => emits('tableAction', { type: 'reload' });
-  const stripedSelect = (e: boolean) => {
-    emits('tableAction', { type: 'striped', value: e });
-  };
-  const densitySelect = (e: string) => {
-    emits('tableAction', { type: 'size', value: e });
-  };
+const tableStriped = computed(() => String(props.striped))
+const tableSize = computed(() => props.size)
+const reload = () => emits('tableAction', { type: 'reload' })
+const stripedSelect = (e: boolean) => {
+  emits('tableAction', { type: 'striped', value: e })
+}
+const densitySelect = (e: string) => {
+  emits('tableAction', { type: 'size', value: e })
+}
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts" name="SettingButton">
-  const { t } = useI18n();
-  const app = useAppStore();
-  const theme = useThemeStore();
+const { t } = useI18n()
+const app = useAppStore()
+const theme = useThemeStore()
 </script>
 
 <template>

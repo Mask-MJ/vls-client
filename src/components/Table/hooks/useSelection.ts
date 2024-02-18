@@ -3,15 +3,15 @@
  * @param {String} rowKey 当表格可以多选时，所指定的 id
  * */
 export const useSelection = (rowKey = 'id') => {
-  const isSelected = ref<boolean>(false);
-  const selectedList = ref<{ [key: string]: any }[]>([]);
+  const isSelected = ref<boolean>(false)
+  const selectedList = ref<{ [key: string]: any }[]>([])
 
   // 当前选中的所有 ids 数组
   const selectedListIds = computed((): string[] => {
-    const ids: string[] = [];
-    selectedList.value.forEach((item) => ids.push(item[rowKey]));
-    return ids;
-  });
+    const ids: string[] = []
+    selectedList.value.forEach((item) => ids.push(item[rowKey]))
+    return ids
+  })
 
   /**
    * @description 多选操作
@@ -19,14 +19,14 @@ export const useSelection = (rowKey = 'id') => {
    * @return void
    */
   const selectionChange = (rowArr: { [key: string]: any }[]) => {
-    rowArr.length ? (isSelected.value = true) : (isSelected.value = false);
-    selectedList.value = rowArr;
-  };
+    rowArr.length ? (isSelected.value = true) : (isSelected.value = false)
+    selectedList.value = rowArr
+  }
 
   return {
     isSelected,
     selectedList,
     selectedListIds,
-    selectionChange,
-  };
-};
+    selectionChange
+  }
+}

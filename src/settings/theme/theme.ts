@@ -1,24 +1,24 @@
-import type { Theme } from './types';
+import type { Theme } from './types'
 
 /** 布局模式 */
 export enum EnumThemeLayoutMode {
   'vertical' = '左侧菜单模式',
   'horizontal' = '顶部菜单模式',
   'vertical-mix' = '左侧菜单混合模式',
-  'horizontal-mix' = '顶部菜单混合模式',
+  'horizontal-mix' = '顶部菜单混合模式'
 }
 
 /** 多页签风格 */
 export enum EnumThemeTabMode {
   'chrome' = '谷歌风格',
-  'button' = '按钮风格',
+  'button' = '按钮风格'
 }
 
 /** 水平模式的菜单位置 */
 export enum EnumThemeHorizontalMenuPosition {
   'flex-start' = '居左',
   'center' = '居中',
-  'flex-end' = '居右',
+  'flex-end' = '居右'
 }
 
 /** 过渡动画类型 */
@@ -28,7 +28,7 @@ export enum EnumThemeAnimateMode {
   'fade-slide' = '滑动',
   'fade' = '消退',
   'fade-bottom' = '底部消退',
-  'fade-scale' = '缩放消退',
+  'fade-scale' = '缩放消退'
 }
 
 export const themeColorList = [
@@ -55,8 +55,8 @@ export const themeColorList = [
   '#ffb300',
   '#fdd835',
   '#6d4c41',
-  '#546e7a',
-];
+  '#546e7a'
+]
 
 export const defaultThemeSetting: Theme = {
   darkMode: false,
@@ -68,8 +68,8 @@ export const defaultThemeSetting: Theme = {
       { value: 'vertical', label: EnumThemeLayoutMode.vertical },
       { value: 'vertical-mix', label: EnumThemeLayoutMode['vertical-mix'] },
       { value: 'horizontal', label: EnumThemeLayoutMode.horizontal },
-      { value: 'horizontal-mix', label: EnumThemeLayoutMode['horizontal-mix'] },
-    ],
+      { value: 'horizontal-mix', label: EnumThemeLayoutMode['horizontal-mix'] }
+    ]
   },
   themeColor: themeColorList[0],
   themeColorList,
@@ -77,7 +77,7 @@ export const defaultThemeSetting: Theme = {
     info: '#2080f0',
     success: '#52c41a',
     warning: '#faad14',
-    error: '#f5222d',
+    error: '#f5222d'
   },
   isCustomizeInfoColor: false,
   fixedHeaderAndTab: true,
@@ -87,8 +87,8 @@ export const defaultThemeSetting: Theme = {
     height: 56,
     crumb: {
       visible: true,
-      showIcon: true,
-    },
+      showIcon: true
+    }
   },
   tab: {
     visible: true,
@@ -96,9 +96,9 @@ export const defaultThemeSetting: Theme = {
     mode: 'chrome',
     modeList: [
       { value: 'chrome', label: EnumThemeTabMode.chrome },
-      { value: 'button', label: EnumThemeTabMode.button },
+      { value: 'button', label: EnumThemeTabMode.button }
     ],
-    isCache: true,
+    isCache: true
   },
   sider: {
     inverted: false,
@@ -106,20 +106,20 @@ export const defaultThemeSetting: Theme = {
     collapsedWidth: 64,
     mixWidth: 80,
     mixCollapsedWidth: 48,
-    mixChildMenuWidth: 200,
+    mixChildMenuWidth: 200
   },
   menu: {
     horizontalPosition: 'flex-start',
     horizontalPositionList: [
       { value: 'flex-start', label: EnumThemeHorizontalMenuPosition['flex-start'] },
       { value: 'center', label: EnumThemeHorizontalMenuPosition.center },
-      { value: 'flex-end', label: EnumThemeHorizontalMenuPosition['flex-end'] },
-    ],
+      { value: 'flex-end', label: EnumThemeHorizontalMenuPosition['flex-end'] }
+    ]
   },
   footer: {
     fixed: false,
     height: 48,
-    visible: true,
+    visible: true
   },
   page: {
     animate: true,
@@ -130,7 +130,7 @@ export const defaultThemeSetting: Theme = {
       { value: 'fade-bottom', label: EnumThemeAnimateMode['fade-bottom'] },
       { value: 'fade-scale', label: EnumThemeAnimateMode['fade-scale'] },
       { value: 'zoom-fade', label: EnumThemeAnimateMode['zoom-fade'] },
-      { value: 'zoom-out', label: EnumThemeAnimateMode['zoom-out'] },
-    ],
-  },
-};
+      { value: 'zoom-out', label: EnumThemeAnimateMode['zoom-out'] }
+    ]
+  }
+}

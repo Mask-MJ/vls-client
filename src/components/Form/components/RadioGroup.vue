@@ -1,23 +1,23 @@
 <script setup lang="ts">
-  import type { OptionsItem } from '../component';
+import type { OptionsItem } from '../component'
 
-  import { isString } from 'lodash-es';
+import { isString } from 'lodash-es'
 
-  const attrs = useAttrs();
-  const props = defineProps({
-    type: { type: String, default: '' },
-    options: { type: Array, default: () => {} },
-  });
+const attrs = useAttrs()
+const props = defineProps({
+  type: { type: String, default: '' },
+  options: { type: Array, default: () => {} }
+})
 
-  const getAttrs = computed(() => ({ ...props, ...attrs }));
-  const getOptions = computed((): OptionsItem[] => {
-    const { options } = props;
-    if (!options || options?.length === 0) return [];
+const getAttrs = computed(() => ({ ...props, ...attrs }))
+const getOptions = computed((): OptionsItem[] => {
+  const { options } = props
+  if (!options || options?.length === 0) return []
 
-    const isStringArr = options.some((item) => isString(item));
-    if (!isStringArr) return options as OptionsItem[];
-    return options.map((item) => ({ label: item, value: item })) as OptionsItem[];
-  });
+  const isStringArr = options.some((item) => isString(item))
+  if (!isStringArr) return options as OptionsItem[]
+  return options.map((item) => ({ label: item, value: item })) as OptionsItem[]
+})
 </script>
 
 <template>

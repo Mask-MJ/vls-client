@@ -1,9 +1,9 @@
-export const ROW_KEY = 'id';
+export const ROW_KEY = 'id'
 // Optional display number per page;
-export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
+export const PAGE_SIZE_OPTIONS = [10, 20, 50, 100]
 
 // Number of items displayed per page
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 10
 // Common interface field settings
 export const FETCH_SETTING = {
   // The field name of the current page passed to the background
@@ -13,21 +13,21 @@ export const FETCH_SETTING = {
   // Field name of the form data returned by the interface
   listField: 'rows',
   // Total number of tables returned by the interface field name
-  totalField: 'total',
-};
+  totalField: 'total'
+}
 // Default Size
-export const DEFAULT_SIZE = 'small';
+export const DEFAULT_SIZE = 'small'
 //  默认居中
-export const DEFAULT_ALIGN = 'center';
+export const DEFAULT_ALIGN = 'center'
 // 操作栏配置
 export const ACTION_SETTINGS = {
   STRIPED: [
     { label: '显示', key: 'true' },
-    { label: '不显示', key: 'false' },
+    { label: '不显示', key: 'false' }
   ],
   DENSITY: [
     { label: '紧凑', key: 'small' },
     { label: '默认', key: 'medium' },
-    { label: '宽松', key: 'large' },
-  ],
-};
+    { label: '宽松', key: 'large' }
+  ]
+}

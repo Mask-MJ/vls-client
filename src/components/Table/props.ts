@@ -1,11 +1,11 @@
-import type { BasicColumn, FetchSetting } from './types';
-import type { DataTableColumn } from 'naive-ui';
-import type { PropType } from 'vue';
-import type { BasicFormProps } from '@/components/Form';
+import type { BasicColumn, FetchSetting } from './types'
+import type { DataTableColumn } from 'naive-ui'
+import type { PropType } from 'vue'
+import type { BasicFormProps } from '@/components/Form'
 
-import { dataTableProps } from 'naive-ui';
+import { dataTableProps } from 'naive-ui'
 
-import { FETCH_SETTING } from './constants';
+import { FETCH_SETTING } from './constants'
 
 export const basicProps = {
   ...dataTableProps,
@@ -18,7 +18,7 @@ export const basicProps = {
   flexHeight: { type: Boolean, default: true },
   pagination: {
     type: [Boolean, Object],
-    default: () => ({ pageSize: 10, pageSizes: [10, 20, 30, 40, 50] }),
+    default: () => ({ pageSize: 10, pageSizes: [10, 20, 30, 40, 50] })
   },
   // scrollX: { type: Number, default: 1800 },
   // 扩展
@@ -53,5 +53,5 @@ export const basicProps = {
   showIndexColumn: { type: Boolean, default: true },
   columns: { type: [Array] as PropType<BasicColumn[]>, default: () => [] },
   // 是否最外层 是的话加阴影
-  outermost: { type: Boolean, default: true },
-};
+  outermost: { type: Boolean, default: true }
+}

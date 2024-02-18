@@ -1,2 +1,2 @@
-export * from './pageEnum';
-export * from './localStorageEnum';
+export * from './pageEnum'
+export * from './localStorageEnum'

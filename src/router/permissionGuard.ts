@@ -29,9 +29,9 @@ function createPermissionGuard(router: Router) {
 
     // 有token
     // 判断是否有用户信息和路由
-    // if (Object.keys(userStore.getUserInfo).length === 0) {
-    //   await userStore.getUserInfoAction()
-    // }
+    if (Object.keys(userStore.getUserInfo).length === 0) {
+      await userStore.getUserInfoAction()
+    }
     if (!userStore.isDynamicAddedRoute) {
       await userStore.getRoutesAction()
     }
