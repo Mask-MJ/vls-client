@@ -22,3 +22,15 @@ export interface SearchParams {
   roleKey: string
   status: string
 }
+
+export interface MenuInfo {
+  id: number
+  name: string
+  path: string
+  icon: string
+  sort: number
+  parentId: number
+  hidden: boolean
+  createdAt: string
+  updatedAt: string
+}

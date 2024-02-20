@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import type { MenuOption } from 'naive-ui'
-
-import { RouterLink } from 'vue-router/auto'
-
 const route = useRoute()
 const app = useAppStore()
 const theme = useThemeStore()
@@ -11,13 +7,7 @@ const userStore = useUserStore()
 const expandedKeys = ref<string[]>([])
 
 const menuOptions = computed(() => {
-  return userStore.backendRouteList.map((item) => {
-    return {
-      key: item.path,
-      label: () => h(RouterLink, { to: { path: item.path } }, { default: () => item.meta?.title }),
-      icon: () => h('i', { class: item.meta?.icon })
-    }
-  }) as MenuOption[]
+  return userStore.menus
 })
 const activeKey = computed(() => route.path)
 function handleUpdateExpandedKeys(keys: string[]) {
@@ -48,8 +38,7 @@ watch(
       :collapsed-width="theme.sider.collapsedWidth"
       :collapsed-icon-size="22"
       :options="menuOptions"
-      :expanded-keys="expandedKeys"
-      accordion
+      default-expand-all
       :indent="18"
       :inverted="theme.sider.inverted"
       @update:expanded-keys="handleUpdateExpandedKeys"

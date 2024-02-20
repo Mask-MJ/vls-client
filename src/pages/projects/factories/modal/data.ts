@@ -13,7 +13,7 @@ export const schemas: FormSchema[] = [
     path: 'position',
     label: '工厂坐标',
     component: 'NInput',
-    show: false,
+    // show: false,
     componentProps: {
       disabled: true
     }

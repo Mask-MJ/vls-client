@@ -10,8 +10,8 @@ const themeStore = useThemeStore()
 const formRef = ref<HTMLElement & FormInst>()
 const rememberMe = ref(false)
 const model = reactive({
-  account: '111111',
-  password: '22222'
+  account: 'admin',
+  password: '123456'
 })
 
 const bgColor = computed(() => {

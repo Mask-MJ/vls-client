@@ -40,13 +40,14 @@ import type {
 declare module 'vue-router/auto/routes' {
   export interface RouteNamedMap {
     '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
-    '/factorys/': RouteRecordInfo<'/factorys/', '/factorys', Record<never, never>, Record<never, never>>,
-    '/keywords/': RouteRecordInfo<'/keywords/', '/keywords', Record<never, never>, Record<never, never>>,
     '/login/': RouteRecordInfo<'/login/', '/login', Record<never, never>, Record<never, never>>,
-    '/roles/': RouteRecordInfo<'/roles/', '/roles', Record<never, never>, Record<never, never>>,
-    '/tasks/': RouteRecordInfo<'/tasks/', '/tasks', Record<never, never>, Record<never, never>>,
-    '/users/': RouteRecordInfo<'/users/', '/users', Record<never, never>, Record<never, never>>,
-    '/valves/': RouteRecordInfo<'/valves/', '/valves', Record<never, never>, Record<never, never>>,
+    '/projects/factories/': RouteRecordInfo<'/projects/factories/', '/projects/factories', Record<never, never>, Record<never, never>>,
+    '/projects/keywords/': RouteRecordInfo<'/projects/keywords/', '/projects/keywords', Record<never, never>, Record<never, never>>,
+    '/projects/tasks/': RouteRecordInfo<'/projects/tasks/', '/projects/tasks', Record<never, never>, Record<never, never>>,
+    '/projects/valves/': RouteRecordInfo<'/projects/valves/', '/projects/valves', Record<never, never>, Record<never, never>>,
+    '/settings/menus/': RouteRecordInfo<'/settings/menus/', '/settings/menus', Record<never, never>, Record<never, never>>,
+    '/settings/roles/': RouteRecordInfo<'/settings/roles/', '/settings/roles', Record<never, never>, Record<never, never>>,
+    '/settings/users/': RouteRecordInfo<'/settings/users/', '/settings/users', Record<never, never>, Record<never, never>>,
   }
 }
 

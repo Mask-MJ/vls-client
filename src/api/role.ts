@@ -1,4 +1,4 @@
-import type { CreatedRole, RoleInfo, SearchParams } from './role.type'
+import type { CreatedRole, MenuInfo, RoleInfo, SearchParams } from './role.type'
 
 import { defHttp } from '@/utils'
 
@@ -21,4 +21,4 @@ export const updateRole = (params: Partial<RoleInfo>) =>
 export const deleteRole = (ids: number | string) => defHttp.delete({ url: `${Api.Roles}/${ids}` })
 
 // 获取菜单权限
-export const getMenusList = () => defHttp.get({ url: Api.Menus })
+export const getMenusList = () => defHttp.get<MenuInfo[]>({ url: Api.Menus })
