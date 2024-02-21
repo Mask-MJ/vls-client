@@ -31,8 +31,8 @@ const [registerTable, { reload }] = useTable({
             }
           },
           {
-            icon: 'i-ant-design:key-outlined',
-            tooltipProps: { content: '重置密码' },
+            icon: 'i-line-md:compass-loop',
+            tooltipProps: { content: '阀门管理' },
             buttonProps: {
               type: 'success',
               onClick: () => router.push(`/projects/valves/${row.id}`)

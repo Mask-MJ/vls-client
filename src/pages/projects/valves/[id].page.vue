@@ -2,22 +2,22 @@
 import type { FactorysInfo } from '@/api/factory.type'
 
 import SetModal from './modal/SetModal.vue'
-import { deleteFactory, getFactoryDetail, getFactoryList } from '@/api/factory'
+import { deleteValve, getValveDetail, getValveList } from '@/api/valve'
 import { useModal } from '@/components/Modal'
 import { Action, useTable } from '@/components/Table'
 
 import { columns, schemas } from './data'
 
-const router = useRouter()
+// const router = useRouter()
 const route = useRoute() as any
-const factoryId = computed(() => route.params.id)
+const factoryId = computed(() => Number(route.params.id))
 
 const [registerSetModal, { openModal }] = useModal()
 const [registerTable, { reload }] = useTable({
-  api: getFactoryList, // 请求接口
+  api: getValveList, // 请求接口
   columns, // 展示的列
   useSearchForm: true, // 启用搜索表单
-  searchInfo: { factoryId: '111' },
+  searchInfo: { factoryId: factoryId.value },
   formConfig: { labelWidth: 100, schemas }, // 搜索表单配置
   bordered: true,
   rowKey: (rowData) => rowData.id,
@@ -30,7 +30,7 @@ const [registerTable, { reload }] = useTable({
           {
             type: 'edit',
             onClick: async () => {
-              const result = await getFactoryDetail(row.id)
+              const result = await getValveDetail(row.id)
               return openModal(true, result)
             }
           },
@@ -38,14 +38,14 @@ const [registerTable, { reload }] = useTable({
             icon: 'i-ant-design:key-outlined',
             tooltipProps: { content: '查看阀门运行数据' },
             buttonProps: {
-              type: 'success',
-              onClick: () => router.push(`/projects/valves/${row.id}`)
+              type: 'success'
+              // onClick: () => router.push(`/projects/valves/${row.id}`)
             }
           },
           {
             type: 'del',
             onClick: async () => {
-              await deleteFactory(row.id)
+              await deleteValve(row.id)
               await reload()
             }
           }
@@ -55,7 +55,7 @@ const [registerTable, { reload }] = useTable({
 })
 
 const handleAdd = () => {
-  openModal(true)
+  openModal(true, { factoryId })
 }
 </script>
 

@@ -48,6 +48,7 @@ declare module 'vue-router/auto/routes' {
     '/projects/valves/[id]': RouteRecordInfo<'/projects/valves/[id]', '/projects/valves/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/system/menus/': RouteRecordInfo<'/system/menus/', '/system/menus', Record<never, never>, Record<never, never>>,
     '/system/roles/': RouteRecordInfo<'/system/roles/', '/system/roles', Record<never, never>, Record<never, never>>,
+    '/system/template/': RouteRecordInfo<'/system/template/', '/system/template', Record<never, never>, Record<never, never>>,
     '/system/users/': RouteRecordInfo<'/system/users/', '/system/users', Record<never, never>, Record<never, never>>,
   }
 }

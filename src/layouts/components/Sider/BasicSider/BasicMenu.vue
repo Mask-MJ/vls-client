@@ -7,7 +7,7 @@ const userStore = useUserStore()
 const expandedKeys = ref<string[]>([])
 
 const menuOptions = computed(() => {
-  return userStore.menus
+  return userStore.menus as any[]
 })
 const activeKey = computed(() => route.path)
 function handleUpdateExpandedKeys(keys: string[]) {

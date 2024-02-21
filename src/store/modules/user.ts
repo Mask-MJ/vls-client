@@ -80,6 +80,8 @@ export const useUserStore = defineStore('user-store', {
 
       const map: any = {}
       const tree = data
+        .filter((item) => item.hidden === false)
+        .sort((a, b) => a.id - b.id)
         .reduce((acc, node) => {
           map[node.id] = {
             key: node.path,
@@ -105,7 +107,6 @@ export const useUserStore = defineStore('user-store', {
           }
           return item
         })
-
       this.setMenus(tree)
 
       const routes = data.map((item) => {
