@@ -61,7 +61,7 @@ export const columns: BasicColumn<UserInfo & { pendingStatus: boolean }>[] = [
         }
       )
   },
-  { title: '创建者', key: 'creater.nickname', width: 100 },
+  // { title: '创建者', key: 'creater.nickname', width: 100 },
   { title: '创建时间', key: 'createdAt', width: 200 },
   { title: '更新时间', key: 'updatedAt', width: 200 }
 ]

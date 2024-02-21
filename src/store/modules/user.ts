@@ -124,6 +124,7 @@ export const useUserStore = defineStore('user-store', {
         }
       })
       this.setBackendRouteList(routes)
+      this.isDynamicAddedRoute = true
       return routes
     },
     /** 设置路由 */
