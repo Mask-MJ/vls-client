@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FactorysInfo } from '@/api/factory.type'
+import type { ValveInfo } from '@/api/valve.type'
 
 import { createValve, updateValve } from '@/api/valve'
 import { useForm } from '@/components/Form'
@@ -13,7 +13,7 @@ const [registerForm, { validate, getPathsValue, setPathsValue }] = useForm({
   schemas
 })
 
-const [registerModal, { closeModal, setModalProps }] = useModalInner(async (data: FactorysInfo) => {
+const [registerModal, { closeModal, setModalProps }] = useModalInner((data: ValveInfo) => {
   if (data.id) {
     setModalProps({ title: '编辑阀门' })
   }

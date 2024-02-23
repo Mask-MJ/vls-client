@@ -14,7 +14,7 @@ export const schemas: FormSchema[] = [
 ]
 
 export const columns: BasicColumn<UserInfo & { pendingStatus: boolean }>[] = [
-  { title: '阀门名称', key: 'factoryId', width: 150 },
+  { title: '阀门名称', key: 'name', width: 150 },
   { title: '创建时间', key: 'createdAt', width: 200 },
   { title: '更新时间', key: 'updatedAt', width: 200 }
 ]

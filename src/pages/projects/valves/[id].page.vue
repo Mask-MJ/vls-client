@@ -55,7 +55,7 @@ const [registerTable, { reload }] = useTable({
 })
 
 const handleAdd = () => {
-  openModal(true, { factoryId })
+  openModal(true, { factoryId: factoryId.value })
 }
 </script>
 
