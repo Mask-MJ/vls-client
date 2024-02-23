@@ -42,13 +42,13 @@ declare module 'vue-router/auto/routes' {
     '/dashboard/': RouteRecordInfo<'/dashboard/', '/dashboard', Record<never, never>, Record<never, never>>,
     '/login/': RouteRecordInfo<'/login/', '/login', Record<never, never>, Record<never, never>>,
     '/projects/factories/': RouteRecordInfo<'/projects/factories/', '/projects/factories', Record<never, never>, Record<never, never>>,
-    '/projects/keywords/': RouteRecordInfo<'/projects/keywords/', '/projects/keywords', Record<never, never>, Record<never, never>>,
     '/projects/tasks/': RouteRecordInfo<'/projects/tasks/', '/projects/tasks', Record<never, never>, Record<never, never>>,
     '/projects/valves/': RouteRecordInfo<'/projects/valves/', '/projects/valves', Record<never, never>, Record<never, never>>,
     '/projects/valves/[id]': RouteRecordInfo<'/projects/valves/[id]', '/projects/valves/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/system/keywords/': RouteRecordInfo<'/system/keywords/', '/system/keywords', Record<never, never>, Record<never, never>>,
     '/system/menus/': RouteRecordInfo<'/system/menus/', '/system/menus', Record<never, never>, Record<never, never>>,
     '/system/roles/': RouteRecordInfo<'/system/roles/', '/system/roles', Record<never, never>, Record<never, never>>,
-    '/system/template/': RouteRecordInfo<'/system/template/', '/system/template', Record<never, never>, Record<never, never>>,
+    '/system/templates/': RouteRecordInfo<'/system/templates/', '/system/templates', Record<never, never>, Record<never, never>>,
     '/system/users/': RouteRecordInfo<'/system/users/', '/system/users', Record<never, never>, Record<never, never>>,
   }
 }
