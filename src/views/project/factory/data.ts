@@ -18,6 +18,8 @@ export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = 
   { title: '最终用户名称', key: 'name', width: 300 },
   { title: '所属行业', key: 'industry', width: 200 },
   { title: '最终用户地址', key: 'address', width: 400 },
+  { title: '创建时间', key: 'createAt', width: 200 },
+  { title: '更新时间', key: 'updateAt', width: 200 },
   { title: '创建者', key: 'createBy', width: 100 }
 ]
 

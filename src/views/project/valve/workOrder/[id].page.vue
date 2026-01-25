@@ -6,25 +6,32 @@ const router = useRouter()
 const valveId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 const valveDetail = ref()
 
+const getDescription = (data: any) => {
+  if (!data) return ''
+  // 返回一个字符串，包含所有描述信息
+  return [
+    data.valveDescription,
+    data.actuatorDescription,
+    data.positionerDescription,
+    data.lsDescription,
+    data.pilotDescription,
+    data.qeDescription,
+    data.regulatorDescription,
+    data.signalComparatorDescription,
+    data.sovDescription,
+    data.tripValveDescription,
+    data.vbDescription
+  ]
+    .map((item: string) => item || '')
+    .filter(Boolean)
+    .join('；')
+}
+
 const [registerTable, { reload }] = useTable({
   api: getValveWorkOrder, // 请求接口
   columns: [
-    { title: '所属最终用户', key: 'factory.name' },
     { title: '任务名称', key: 'typeName' },
-    {
-      title: '位号',
-      key: 'valve',
-      render: (data: any) => {
-        return data.valve?.map((item: any) => item.tag).join(', ')
-      }
-    },
-    {
-      title: '序列号',
-      key: 'valve',
-      render: (data: any) => {
-        return data.valve?.map((item: any) => item.serialNumber).join(', ')
-      }
-    },
+    { title: '业务类型', key: 'businessType' },
     { title: '故障类别', key: 'faultCategory' },
     { title: '处理措施', key: 'remedialActions' },
     { title: '维修完成时间', key: 'createdAt' },
@@ -40,7 +47,8 @@ const [registerTable, { reload }] = useTable({
             )
           : ''
       }
-    }
+    },
+    { title: '工单编号', key: 'serviceAppId' }
   ], // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: {
@@ -93,6 +101,8 @@ watch(
           <li>所属最终用户：{{ valveDetail?.factory?.name || '' }}</li>
           <li>所属装置：{{ valveDetail?.device?.name || '' }}</li>
           <li>阀门位号：{{ valveDetail?.tag || '' }}</li>
+          <li>阀体序列号：{{ valveDetail?.serialNumber || '' }}</li>
+          <li>阀门套装：{{ getDescription(valveDetail) }}</li>
         </ul>
       </n-card>
       <Table class="w-3/4" @register="registerTable"> </Table>

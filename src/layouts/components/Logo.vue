@@ -16,7 +16,7 @@ defineProps({ showTitle: { type: Boolean, default: true } })
       class="pl-8px text-align-center text-16px text-primary font-bold transition duration-300 ease-in-out"
     >
       <!-- {{ t('app.name') }} -->
-      VCS阀门全生命周期 <br />
+      VLS阀门全生命周期 <br />
       信息管理系统
     </h2>
   </router-link>

@@ -24,7 +24,7 @@ const handleSubmit = async () => {
     <div class="loginForm">
       <header class="text-center">
         <n-gradient-text type="primary" :size="28">
-          VCS阀门全生命周期 <br />
+          VLS阀门全生命周期 <br />
           信息管理系统
           <!-- {{ t('app.name') }} -->
         </n-gradient-text>

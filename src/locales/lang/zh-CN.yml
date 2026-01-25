@@ -1,5 +1,5 @@
 app:
-  name: VCS阀门全生命周期信息管理系统
+  name: VLS阀门全生命周期信息管理系统
   language: 中文
   logoutTip: 温馨提醒
   logoutMessage: 是否确认退出系统?
