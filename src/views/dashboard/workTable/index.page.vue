@@ -186,7 +186,8 @@ const tabsOptions = computed(() => [
     label: '维修记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '任务名称', key: 'typeName' },
+      { title: '业务类型', key: 'businessType' },
+      { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
         key: 'valve',
@@ -202,10 +203,11 @@ const tabsOptions = computed(() => [
         }
       },
       { title: '故障类别', key: 'faultCategory' },
+      { title: '故障描述', key: 'faultDetail' },
       { title: '处理措施', key: 'remedialActions' },
-      { title: '维修完成时间', key: 'createdAt' },
+      { title: '完成时间', key: 'createdAt' },
       {
-        title: '维修报告',
+        title: '服务报告',
         key: 'attachment',
         render: (data: any) => {
           return data.attachment
@@ -229,7 +231,8 @@ const tabsOptions = computed(() => [
     label: '现场服务记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '任务名称', key: 'typeName' },
+      { title: '业务类型', key: 'businessType' },
+      { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
         key: 'valve',
@@ -245,10 +248,11 @@ const tabsOptions = computed(() => [
         }
       },
       { title: '故障类别', key: 'faultCategory' },
+      { title: '故障描述', key: 'faultDetail' },
       { title: '处理措施', key: 'remedialActions' },
-      { title: '维修完成时间', key: 'createdAt' },
+      { title: '完成时间', key: 'createdAt' },
       {
-        title: '维修报告',
+        title: '服务报告',
         key: 'attachment',
         render: (data: any) => {
           return data.attachment

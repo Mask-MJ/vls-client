@@ -5,7 +5,8 @@ import { getDictDataCharts, type DictDataInfo } from '@/api/system/dict'
 import {
   getValveDetail,
   getValveHealthScoreTrendPlot,
-  getValveHistoryChart
+  getValveHistoryChart,
+  getValveHistoryScore
 } from '@/api/project/valve'
 import { use } from 'echarts/core'
 import dayjs from 'dayjs'
@@ -36,6 +37,7 @@ const dictDatas = ref<DictDataInfo[]>([])
 const valveDetail = ref()
 const healthScore = ref()
 const result = ref<any[]>([])
+const historyScores = ref<any[]>([])
 const getOption = (data: DictDataInfo) => {
   return result.value.filter((item) => item._id === data.id)[0]
 }
@@ -62,6 +64,12 @@ watch(
     valveDetail.value = await getValveDetail(valveId)
     dictDatas.value = await getDictDataCharts({ dictTypeValue: 'hart' })
     healthScore.value = await getValveHealthScoreTrendPlot(valveId)
+    try {
+      const scoreResult = await getValveHistoryScore({ valveId })
+      historyScores.value = scoreResult?.scores || []
+    } catch {
+      historyScores.value = []
+    }
     const beginTime = dayjs().subtract(1, 'year').valueOf()
     const endTime = dayjs().valueOf()
     result.value = await Promise.all(
@@ -141,7 +149,8 @@ const tabsOptions = computed(() => [
     label: '维修记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '任务名称', key: 'typeName' },
+      { title: '业务类型', key: 'businessType' },
+      { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
         key: 'valve',
@@ -157,10 +166,11 @@ const tabsOptions = computed(() => [
         }
       },
       { title: '故障类别', key: 'faultCategory' },
+      { title: '故障描述', key: 'faultDetail' },
       { title: '处理措施', key: 'remedialActions' },
-      { title: '维修完成时间', key: 'createdAt' },
+      { title: '完成时间', key: 'createdAt' },
       {
-        title: '维修报告',
+        title: '服务报告',
         key: 'attachment',
         render: (data: any) => {
           return data.attachment
@@ -184,7 +194,8 @@ const tabsOptions = computed(() => [
     label: '现场服务记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '任务名称', key: 'typeName' },
+      { title: '业务类型', key: 'businessType' },
+      { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
         key: 'valve',
@@ -200,10 +211,11 @@ const tabsOptions = computed(() => [
         }
       },
       { title: '故障类别', key: 'faultCategory' },
+      { title: '故障描述', key: 'faultDetail' },
       { title: '处理措施', key: 'remedialActions' },
-      { title: '维修完成时间', key: 'createdAt' },
+      { title: '完成时间', key: 'createdAt' },
       {
-        title: '维修报告',
+        title: '服务报告',
         key: 'attachment',
         render: (data: any) => {
           return data.attachment
@@ -221,6 +233,16 @@ const tabsOptions = computed(() => [
       }
     ],
     data: valveDetail.value?.workOrder?.filter((item: any) => item.type === 0) || []
+  },
+  {
+    name: '4',
+    label: '历史评分',
+    columns: [
+      { title: '检查时间', key: 'checkTime', width: 300 },
+      { title: '评分时间', key: 'scoreTime', width: 150 },
+      { title: '分数', key: 'infor.totalScore', width: 150 }
+    ],
+    data: historyScores.value
   }
 ])
 
@@ -330,6 +352,7 @@ const getDescription = (data: any) => {
           <li>阀门位号：{{ valveDetail?.tag || '' }}</li>
           <li>阀体序列号：{{ valveDetail?.serialNumber || '' }}</li>
           <li>阀门套装：{{ getDescription(valveDetail) }}</li>
+          <li>最后评分时间：{{ historyScores?.[0]?.scoreTime || '' }}</li>
         </ul>
       </n-card>
       <n-grid x-gap="12" :cols="3" class="my-4">

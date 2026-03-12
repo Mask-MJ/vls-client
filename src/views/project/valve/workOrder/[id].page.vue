@@ -30,13 +30,14 @@ const getDescription = (data: any) => {
 const [registerTable, { reload }] = useTable({
   api: getValveWorkOrder, // 请求接口
   columns: [
-    { title: '任务名称', key: 'typeName' },
     { title: '业务类型', key: 'businessType' },
+    { title: '任务类型', key: 'typeName' },
     { title: '故障类别', key: 'faultCategory' },
+    { title: '故障描述', key: 'faultDetail' },
     { title: '处理措施', key: 'remedialActions' },
-    { title: '维修完成时间', key: 'createdAt' },
+    { title: '完成时间', key: 'createdAt' },
     {
-      title: '维修报告',
+      title: '服务报告',
       key: 'attachment',
       render: (data: any) => {
         return data.attachment
@@ -48,7 +49,7 @@ const [registerTable, { reload }] = useTable({
           : ''
       }
     },
-    { title: '工单编号', key: 'serviceAppId' }
+    { title: '工单编号/任务编号', key: 'serviceAppId' }
   ], // 展示的列
   useSearchForm: true, // 启用搜索表单
   formConfig: {
@@ -57,9 +58,9 @@ const [registerTable, { reload }] = useTable({
       {
         path: 'typeName',
         component: 'NInput',
-        label: '任务名称',
+        label: '任务类型',
         span: 8,
-        componentProps: { placeholder: '请输入任务名称' }
+        componentProps: { placeholder: '请输入任务类型' }
       },
       {
         path: 'type',
