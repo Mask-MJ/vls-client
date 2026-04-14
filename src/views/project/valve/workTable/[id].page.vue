@@ -19,6 +19,7 @@ import {
   GridComponent,
   MarkLineComponent
 } from 'echarts/components'
+import { formatBusinessType } from '@/utils'
 use([
   CanvasRenderer,
   LineChart,
@@ -149,7 +150,11 @@ const tabsOptions = computed(() => [
     label: '维修记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '业务类型', key: 'businessType' },
+      {
+        title: '业务类型',
+        key: 'businessType',
+        render: (row: any) => formatBusinessType(row.businessType)
+      },
       { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
@@ -194,7 +199,11 @@ const tabsOptions = computed(() => [
     label: '现场服务记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '业务类型', key: 'businessType' },
+      {
+        title: '业务类型',
+        key: 'businessType',
+        render: (row: any) => formatBusinessType(row.businessType)
+      },
       { title: '任务类型', key: 'typeName' },
       {
         title: '位号',

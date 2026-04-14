@@ -1,6 +1,7 @@
 <script setup lang="ts" name="factoryDetail">
 import { getFactoryChart, getFactoryChart2, getFactoryDetail } from '@/api/project/factory'
 import { BarOption, LineOption, PieOption } from '@/views/dashboard/workTable/data'
+import { formatBusinessType } from '@/utils'
 import { cloneDeep, map } from 'lodash-es'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -149,7 +150,11 @@ const tabsOptions = computed(() => [
     label: '维修记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '业务类型', key: 'businessType' },
+      {
+        title: '业务类型',
+        key: 'businessType',
+        render: (row: any) => formatBusinessType(row.businessType)
+      },
       { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
@@ -194,7 +199,11 @@ const tabsOptions = computed(() => [
     label: '现场服务记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '业务类型', key: 'businessType' },
+      {
+        title: '业务类型',
+        key: 'businessType',
+        render: (row: any) => formatBusinessType(row.businessType)
+      },
       { title: '任务类型', key: 'typeName' },
       {
         title: '位号',

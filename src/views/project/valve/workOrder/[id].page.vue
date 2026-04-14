@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useTable } from '@/components/Table'
 import { getValveWorkOrder, getValveDetail } from '@/api/project/valve'
+import { formatBusinessType } from '@/utils'
 
 const router = useRouter()
 const valveId = computed(() => (router.currentRoute.value.params as { id: string }).id)
@@ -30,7 +31,11 @@ const getDescription = (data: any) => {
 const [registerTable, { reload }] = useTable({
   api: getValveWorkOrder, // 请求接口
   columns: [
-    { title: '业务类型', key: 'businessType' },
+    {
+      title: '业务类型',
+      key: 'businessType',
+      render: (row: any) => formatBusinessType(row.businessType)
+    },
     { title: '任务类型', key: 'typeName' },
     { title: '故障类别', key: 'faultCategory' },
     { title: '故障描述', key: 'faultDetail' },

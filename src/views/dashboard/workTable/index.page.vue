@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { use, registerMap } from 'echarts/core'
 import VChart, { THEME_KEY } from 'vue-echarts'
+import { formatBusinessType } from '@/utils'
 import { CanvasRenderer } from 'echarts/renderers'
 import { LineChart, BarChart, MapChart } from 'echarts/charts'
 import {
@@ -186,7 +187,11 @@ const tabsOptions = computed(() => [
     label: '维修记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '业务类型', key: 'businessType' },
+      {
+        title: '业务类型',
+        key: 'businessType',
+        render: (row: any) => formatBusinessType(row.businessType)
+      },
       { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
@@ -231,7 +236,11 @@ const tabsOptions = computed(() => [
     label: '现场服务记录',
     columns: [
       { title: '所属最终用户', key: 'factory.name' },
-      { title: '业务类型', key: 'businessType' },
+      {
+        title: '业务类型',
+        key: 'businessType',
+        render: (row: any) => formatBusinessType(row.businessType)
+      },
       { title: '任务类型', key: 'typeName' },
       {
         title: '位号',
