@@ -38,10 +38,20 @@ export const setSchemas: FormSchema[] = [
     }
   },
   {
+    path: 'grantAllFactories',
+    label: '全部工厂授权',
+    component: 'NSwitch',
+    componentProps: {
+      checkedValue: true,
+      uncheckedValue: false
+    },
+    suffix: '勾选后该角色自动拥有所有当前及后续新增工厂的查看权限'
+  },
+  {
     path: 'factoryIds',
     label: '数据权限',
     component: 'ApiTreeSelect',
-    componentProps: {
+    componentProps: ({ formModel }) => ({
       immediate: true,
       api: getFactoryList,
       multiple: true,
@@ -49,8 +59,9 @@ export const setSchemas: FormSchema[] = [
       keyField: 'id',
       checkable: true,
       cascade: true,
-      resultField: 'rows'
-    }
+      resultField: 'rows',
+      disabled: formModel.grantAllFactories === true
+    })
   },
   {
     path: 'remark',
