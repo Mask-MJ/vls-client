@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { updateUser } from '@/api/system/user'
+import { changePassword } from '@/api/system/user'
 import { useForm } from '@/components/Form'
 import { useModalInner } from '@/components/Modal'
 
@@ -16,8 +16,8 @@ const [registerModal, { closeModal }] = useModalInner(async (data) => {
 const handleSubmit = async () => {
   try {
     await validate()
-    const result = getPathsValue()
-    await updateUser(result)
+    const { id, password } = getPathsValue()
+    await changePassword({ id, password, oldPassword: '' })
     window.$message.success(`修改成功`)
     closeModal()
   } catch {
