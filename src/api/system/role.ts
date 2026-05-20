@@ -16,6 +16,7 @@ export interface RoleInfo {
   sort: number
   menu?: number[]
   factory?: number[]
+  grantAllFactories?: boolean
   remark: string
   createdAt: string
   updatedAt: string
