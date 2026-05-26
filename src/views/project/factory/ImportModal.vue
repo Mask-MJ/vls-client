@@ -26,6 +26,9 @@ const beforeUpload = async (data: { file: UploadFileInfo; fileList: UploadFileIn
   }
 }
 
+// Why: 旧实现只看 HTTP status === 201 就弹"导入成功",但后端 try-catch 把每行 valve
+// 写入失败吞进 skipped,即使 created=0 也照样返回 201 → 用户看到"成功"但客户下空空。
+// 现在读 response.data 真实数字,区分"全失败/部分失败/全成功"三态。
 const submit = async () => {
   try {
     const result = await importValveData({
@@ -33,11 +36,33 @@ const submit = async () => {
       fileName: fileList.value[0].name,
       factoryId: factoryId.value
     })
-    if (result.status === 201) {
-      window.$message.success('导入成功')
-    } else {
-      window.$message.error('导入失败')
+    const body = (result?.data ?? {}) as {
+      success?: boolean
+      total?: number
+      created?: number
+      updated?: number
+      skipped?: number
+      skippedRows?: Array<{ row: number; reason: string }>
     }
+    if (result.status !== 201 || body.success === false) {
+      window.$message.error('导入失败')
+      return
+    }
+    const total = Number(body.total ?? 0)
+    const created = Number(body.created ?? 0)
+    const updated = Number(body.updated ?? 0)
+    const skipped = Number(body.skipped ?? 0)
+    if (created === 0 && updated === 0) {
+      const firstReason = body.skippedRows?.[0]?.reason
+      window.$message.error(
+        `导入失败:共 ${total} 行全部跳过${firstReason ? `(首条原因:${firstReason})` : ''},请联系技术人员排查`
+      )
+      return
+    }
+    const parts: string[] = [`新增 ${created} 条`]
+    if (updated > 0) parts.push(`更新 ${updated} 条`)
+    if (skipped > 0) parts.push(`跳过 ${skipped} 条`)
+    window.$message.success(`导入成功:${parts.join(',')}`)
     closeModal()
   } catch (error) {
     window.$message.error('导入失败')
