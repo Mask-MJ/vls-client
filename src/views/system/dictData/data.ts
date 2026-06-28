@@ -84,6 +84,14 @@ export const setSchemas: FormSchema[] = [
     span: 12
   },
   {
+    path: 'unit',
+    label: '单位',
+    ifShow: ({ values }) => values.isChart,
+    component: 'NInput',
+    componentProps: { placeholder: '如：% / mm / °C' },
+    span: 12
+  },
+  {
     path: 'chartType',
     label: '图表数据类型',
     component: 'NRadioGroup',

@@ -9,7 +9,14 @@ export const searchSchemas: FormSchema[] = [
     path: '[beginTime, endTime]',
     component: 'NDatePicker',
     label: '创建时间',
-    span: 16,
+    span: 8,
+    componentProps: { type: 'datetimerange' }
+  },
+  {
+    path: '[updatedBeginTime, updatedEndTime]',
+    component: 'NDatePicker',
+    label: '更新时间',
+    span: 8,
     componentProps: { type: 'datetimerange' }
   }
 ]
@@ -18,8 +25,8 @@ export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = 
   { title: '最终用户名称', key: 'name', width: 300 },
   { title: '所属行业', key: 'industry', width: 200 },
   { title: '最终用户地址', key: 'address', width: 400 },
-  { title: '创建时间', key: 'createdAt', width: 200 },
-  { title: '更新时间', key: 'updatedAt', width: 200 },
+  { title: '创建时间', key: 'createdAt', width: 200, sorter: 'default' },
+  { title: '更新时间', key: 'updatedAt', width: 200, sorter: 'default' },
   { title: '创建者', key: 'createBy', width: 100 }
 ]
 

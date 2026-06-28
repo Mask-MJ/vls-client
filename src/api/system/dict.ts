@@ -42,6 +42,7 @@ export interface DictDataInfo {
   sort: number
   lowerLimit: number
   upperLimit: number
+  unit: string | null
   status: boolean
   type: string
   dictTypeId: number

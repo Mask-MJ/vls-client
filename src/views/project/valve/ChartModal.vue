@@ -75,11 +75,12 @@ const change = async () => {
   const min = Math.min(...result.dataLine, dictData.lowerLimit)
   const lowerLimit = Number(dictData.lowerLimit)
   const upperLimit = Number(dictData.upperLimit)
+  const unit = dictData.unit || ''
   option.value = {
     legend: { data: ['数据线', '预测线', '辅助线', '标准线'] },
     tooltip: { trigger: 'axis' },
     xAxis: { type: 'category', data: result.times },
-    yAxis: { type: 'value', max, min },
+    yAxis: { type: 'value', max, min, name: unit, nameLocation: 'end' },
     series: [
       {
         type: 'line',

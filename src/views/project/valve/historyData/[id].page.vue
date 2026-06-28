@@ -164,13 +164,15 @@ watch(
 </script>
 
 <template>
-  <div class="h-full flex">
-    <n-card class="mr-2 w-1/5" title="阀门信息">
-      <div>最终用户：{{ valveDetail.factory?.name }}</div>
-      <div>装置：{{ valveDetail.unit }}</div>
-      <div>位号：{{ valveDetail.tag }}</div>
+  <div class="h-full flex flex-col">
+    <n-card class="mb-2 w-full" title="阀门信息" size="small">
+      <n-grid :cols="3" x-gap="12">
+        <n-gi>最终用户：{{ valveDetail.factory?.name }}</n-gi>
+        <n-gi>装置：{{ valveDetail.unit }}</n-gi>
+        <n-gi>位号：{{ valveDetail.tag }}</n-gi>
+      </n-grid>
     </n-card>
-    <Table class="w-4/5" @register="registerTable">
+    <Table class="w-full flex-1" @register="registerTable">
       <template #toolbar>
         <n-button class="mr-2" type="primary" @click="exportData()"> 导出数据 </n-button>
         <n-button class="mr-2" type="primary" @click="changeLanguage">
