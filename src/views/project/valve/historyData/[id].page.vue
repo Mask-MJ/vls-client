@@ -7,32 +7,38 @@ import { Workbook } from 'exceljs'
 import dayjs from 'dayjs'
 
 const router = useRouter()
-const tableData = ref<any[]>([])
-const language = ref('zh')
+const language = ref<'zh' | 'en'>('zh')
 const dictData = ref<any[]>([])
 const valveDetail = ref<any>({})
 const dictDataTreeList = ref<any[]>([])
+// 当前页展平后的采集(每项 = 一次采集, 字段作为 key 平铺在对象上)
+const collectionRows = ref<any[]>([])
 const valveId = computed(() => (router.currentRoute.value.params as { id: string }).id)
 
-const [registerTable, { setColumns, getColumns, reload }] = useTable({
+const [registerTable, { setColumns, reload }] = useTable({
   api: getValveHistoryList,
-  columns: [
-    { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
-    { title: '读取时间', key: 'time', resizable: true }
-  ], // 展示的列
+  columns: [{ title: '字段', key: 'fieldName', width: 220, fixed: 'left' }],
   bordered: true,
-  searchInfo: { valveId }, // 额外参数
-  rowKey: (rowData) => rowData.id,
+  searchInfo: { valveId },
+  rowKey: (rowData: any) => rowData.fieldKey,
   showToolbars: false,
   showIndexColumn: false,
-  afterFetch: async (data) => {
-    dictDataTreeList.value = await getDictDataTreeListAll()
-    return transformData(data, dictDataTreeList.value)
+  // ponytail: 转置视图 — 分页仍按"采集条数"分, itemCount 走后端 total,
+  // 表格 rows 变成"字段行", 每列是一次采集。useTable / n-data-table / 分页语义都保持不变。
+  afterFetch: async (rows: any[]) => {
+    if (!dictDataTreeList.value.length) {
+      dictDataTreeList.value = await getDictDataTreeListAll()
+    }
+    const flat = transformData(rows, dictDataTreeList.value)
+    collectionRows.value = flat
+    setColumns(buildTransposedColumns(flat))
+    return buildTransposedRows(flat)
   }
 })
-const transformData = (data: any[], dictDataTreeList: any[]) => {
+
+// 展平一条采集: valveHistoryData 数组 → { tag, time, [字段名]: 值 }
+const transformData = (data: any[], treeList: any[]) => {
   return data.map((item: any) => {
-    // 数组转对象
     const condition: any = {}
     const repeatArray = flattenDepth(
       Object.values(groupBy(item.valveHistoryData, (i: any) => i.name)).filter(
@@ -40,19 +46,17 @@ const transformData = (data: any[], dictDataTreeList: any[]) => {
       ),
       1
     )
-    item.valveHistoryData.map((itm: any) => {
-      let value = itm.value === null ? '----' : itm.value + (itm.unit || '')
+    item.valveHistoryData.forEach((itm: any) => {
+      let value: any = itm.value === null ? '----' : itm.value + (itm.unit || '')
       if (typeof value === 'object') {
         value = Object.keys(value)
           .map((key) => `${key}: ${value[key]}`)
           .join('; ')
       }
-      // 判断 itm 是否和 repeatArray 数组中的对象完全相等
       const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(itm))
       if (isRepeat && itm.treeId) {
-        const treeData = dictDataTreeList.find((i: any) => i.id === itm.treeId)
-        const name = `${itm.name}(${treeData.value})`
-        condition[name] = value
+        const treeData = treeList.find((i: any) => i.id === itm.treeId)
+        condition[`${itm.name}(${treeData?.value})`] = value
       } else {
         condition[itm.name] = value
       }
@@ -60,89 +64,127 @@ const transformData = (data: any[], dictDataTreeList: any[]) => {
     return { tag: item.tag, time: item.time, ...condition }
   })
 }
-const transformColums = () => {
-  const columns: any[] = []
+
+// 字段清单 = 位号 + 读取时间 + HART 字典所有项(按当前语言取名)
+const buildFieldList = () => {
+  const fields: { label: string; key: string }[] = [
+    { label: language.value === 'zh' ? '位号' : 'Tag', key: 'tag' },
+    { label: language.value === 'zh' ? '读取时间' : 'Time', key: 'time' }
+  ]
   const repeatArray = flattenDepth(
     Object.values(groupBy(dictData.value, (item: any) => item.name)).filter(
       (value) => value.length > 1
-    )
+    ),
+    1
   )
-
   dictData.value.forEach((item: any) => {
-    // const name = language.value === 'zh' ? item.name : item.value
-    let name = item.name
-    if (language.value === 'zh') {
-      name = item.cnTitle || item.name
-    } else {
-      name = item.enTitle || item.value
-    }
+    const label =
+      language.value === 'zh' ? item.cnTitle || item.name : item.enTitle || item.value
     const isRepeat = repeatArray.some((i: any) => JSON.stringify(i) === JSON.stringify(item))
     if (isRepeat && item.treeId) {
-      columns.push({
-        title: `${name}(${item.tree.value})`,
-        key: `${item.name}(${item.tree.value})`,
-        width: 150
+      fields.push({
+        label: `${label}(${item.tree?.value})`,
+        key: `${item.name}(${item.tree?.value})`
       })
     } else {
-      columns.push({ title: name, key: item.name, width: 150 })
+      fields.push({ label, key: item.name })
     }
   })
-  return columns
+  return fields
 }
+
+// 转置后的列: 第一列固定"字段", 后续每列 = 一次采集
+const buildTransposedColumns = (flat: any[]) => {
+  const cols: any[] = [
+    {
+      title: language.value === 'zh' ? '字段' : 'Field',
+      key: 'fieldName',
+      width: 220,
+      fixed: 'left'
+    }
+  ]
+  flat.forEach((rec: any, idx: number) => {
+    cols.push({
+      title: () =>
+        h('div', { class: 'text-center leading-tight' }, [
+          h('div', null, rec.tag ?? ''),
+          h(
+            'div',
+            { class: 'text-xs op-70' },
+            rec.time ? dayjs(rec.time).format('YYYY-MM-DD HH:mm:ss') : ''
+          )
+        ]),
+      key: `col_${idx}`,
+      minWidth: 180
+    })
+  })
+  return cols
+}
+
+// 转置后的行: 每行 = 一个字段, 值分布在 col_0..col_N
+const buildTransposedRows = (flat: any[]) => {
+  const fields = buildFieldList()
+  return fields.map((f) => {
+    const row: any = { fieldKey: f.key, fieldName: f.label }
+    flat.forEach((rec: any, idx: number) => {
+      let value = rec[f.key]
+      if (f.key === 'time' && value) {
+        value = dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+      }
+      row[`col_${idx}`] = value ?? ''
+    })
+    return row
+  })
+}
+
 const changeLanguage = () => {
   language.value = language.value === 'zh' ? 'en' : 'zh'
-  setColumns([
-    { title: language.value === 'zh' ? '位号' : 'tag', key: 'tag', width: 200, fixed: 'left' },
-    {
-      title: language.value === 'zh' ? '采集时间' : 'time',
-      key: 'time',
-      width: 200,
-      render(rowData: any) {
-        return dayjs(rowData.time).format('YYYY-MM-DD HH:mm:ss')
-      }
-    },
-    ...transformColums()
-  ])
+  reload()
 }
-const exportData = async () => {
-  const workbook = new Workbook()
-  const worksheet = workbook.addWorksheet('解析结果')
-  worksheet.columns = getColumns().map((item: any) => {
-    return { header: item.title, key: item.key, width: 30 }
-  })
-  // const data = getTableData()
-  tableData.value = (
-    await getValveHistoryList({
-      valveId: Number(valveId.value),
-      pageSize: 10000
-    })
-  ).rows
-  const data = transformData(tableData.value, dictDataTreeList.value)
-  worksheet.addRows(data)
-  const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
-  const res = await workbook.xlsx.writeBuffer(arraybuffer)
-  download(res)
-}
-function download(arrayBuffer: any) {
-  const link = document.createElement('a')
 
-  const blob = new Blob([arrayBuffer])
-  const url = URL.createObjectURL(blob)
-  const valveTag = tableData.value[0]?.tag
-  if (!valveTag) {
+// 导出 Excel 保持"横排"(每行=采集, 每列=字段) — 报告 xlsx 惯例, 便于二次分析
+const exportData = async () => {
+  const allRaw = await getValveHistoryList({
+    valveId: Number(valveId.value),
+    pageSize: 10000
+  })
+  const flat = transformData(allRaw.rows, dictDataTreeList.value)
+  const tag = flat[0]?.tag
+  if (!tag) {
     window.$message.error('暂无数据')
     return
   }
-  link.href = url
-  link.download = valveTag + ' - 阀门历史数据.xlsx'
-
-  document.body.appendChild(link)
-
-  link.click()
-  link.addEventListener('click', () => {
-    link.remove()
-  })
+  const fields = buildFieldList()
+  const workbook = new Workbook()
+  const worksheet = workbook.addWorksheet('解析结果')
+  worksheet.columns = fields.map((f) => ({ header: f.label, key: f.key, width: 24 }))
+  worksheet.addRows(
+    flat.map((rec: any) => {
+      const out: any = {}
+      fields.forEach((f) => {
+        let value = rec[f.key]
+        if (f.key === 'time' && value) value = dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+        out[f.key] = value ?? ''
+      })
+      return out
+    })
+  )
+  const arraybuffer: any = new ArrayBuffer(10 * 1024 * 1024)
+  const res = await workbook.xlsx.writeBuffer(arraybuffer)
+  download(res, tag)
 }
+
+function download(arrayBuffer: any, tag: string) {
+  const link = document.createElement('a')
+  const blob = new Blob([arrayBuffer])
+  const url = URL.createObjectURL(blob)
+  link.href = url
+  link.download = tag + ' - 阀门历史数据.xlsx'
+  document.body.appendChild(link)
+  link.click()
+  link.addEventListener('click', () => link.remove())
+}
+
 watch(
   () => (router.currentRoute.value.params as { id: string }).id,
   async (val) => {
@@ -151,12 +193,6 @@ watch(
     const dictType = (await getDictTypeList({ name: 'HART', pageSize: 1000 })).rows
     const dictTypeId = dictType[0].id
     dictData.value = (await getDictDataList({ dictTypeId, pageSize: 1000 })).rows
-
-    setColumns([
-      { title: '位号', key: 'tag', resizable: true, fixed: 'left' },
-      { title: '读取时间', key: 'time', minWidth: 200, resizable: true },
-      ...transformColums()
-    ])
     reload()
   },
   { immediate: true }
