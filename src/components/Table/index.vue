@@ -18,7 +18,13 @@ import { basicProps } from './props'
 const slots = useSlots()
 // const attrs = useAttrs();
 const props = defineProps(basicProps)
-const emits = defineEmits(['change', 'register', 'fetch-success', 'fetch-error'] as string[])
+const emits = defineEmits([
+  'change',
+  'register',
+  'fetch-success',
+  'fetch-error',
+  'sorter-change'
+] as string[])
 
 const innerPropsRef = ref<Partial<BasicTableProps>>()
 // 选中的行
@@ -199,6 +205,7 @@ emits('register', tableAction, formActions)
         @update:page="updatePage"
         @update:page-size="updatePageSize"
         @update:checked-row-keys="setSelectedRowKeys"
+        @update:sorter="(sorter: any) => emits('sorter-change', sorter)"
       >
         <template v-for="item in Object.keys($slots)" #[item]="data" :key="item">
           <slot :name="item" v-bind="data || {}"></slot>

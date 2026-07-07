@@ -25,8 +25,10 @@ export const columns: BasicColumn<FactoryInfo & { pendingStatus: boolean }>[] = 
   { title: '最终用户名称', key: 'name', width: 300 },
   { title: '所属行业', key: 'industry', width: 200 },
   { title: '最终用户地址', key: 'address', width: 400 },
-  { title: '创建时间', key: 'createdAt', width: 200, sorter: 'default' },
-  { title: '更新时间', key: 'updatedAt', width: 200, sorter: 'default' },
+  // sorter: true = remote sort, 排序状态通过 Table 组件 @sorter-change 抛给 factory 页
+  // 面处理, 由后端返回排好的数据; 见 index.page.vue 的 handleSorterChange
+  { title: '创建时间', key: 'createdAt', width: 200, sorter: true },
+  { title: '更新时间', key: 'updatedAt', width: 200, sorter: true },
   { title: '创建者', key: 'createBy', width: 100 }
 ]
 
