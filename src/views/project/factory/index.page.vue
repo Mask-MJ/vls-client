@@ -19,6 +19,8 @@ const [registerSetModal, { openModal: openSetModel }] = useModal()
 const [registerImportModal, { openModal: openImportModel }] = useModal()
 const [registerReportModal, { openModal: openReportModel }] = useModal()
 const total = ref(0)
+// 服务端排序状态; 空对象表示走后端默认 (updatedAt desc, createdAt desc)
+const sortState = ref<{ sortBy?: 'createdAt' | 'updatedAt'; sortOrder?: 'asc' | 'desc' }>({})
 const [registerTable, { reload, getRawTableData }] = useTable({
   api: getFactoryList, // 请求接口
   columns, // 展示的列
@@ -28,6 +30,7 @@ const [registerTable, { reload, getRawTableData }] = useTable({
   rowKey: (rowData) => rowData.id,
   showIndexColumn: false,
   pagination: false,
+  beforeFetch: (params: Recordable) => ({ ...params, ...sortState.value }),
   afterFetch: () => {
     total.value = getRawTableData().total
   },
@@ -119,6 +122,18 @@ const download = async () => {
   link.href = 'http://200.200.200.18:9000/pdf/阀门导入数据模板 V6.xlsx'
   link.click()
 }
+// naive-ui 循环: null → asc → desc → null; null 时回退后端默认排序
+const handleSorterChange = (sorter: { columnKey?: string; order?: 'ascend' | 'descend' | false } | null) => {
+  if (!sorter || !sorter.order || !sorter.columnKey) {
+    sortState.value = {}
+  } else if (sorter.columnKey === 'createdAt' || sorter.columnKey === 'updatedAt') {
+    sortState.value = {
+      sortBy: sorter.columnKey,
+      sortOrder: sorter.order === 'ascend' ? 'asc' : 'desc'
+    }
+  }
+  reload()
+}
 // const handlePositiveClick = async () => {
 //   await deleteAllFactory()
 //   reload()
@@ -127,7 +142,7 @@ const download = async () => {
 
 <template>
   <PageWrapper>
-    <Table @register="registerTable">
+    <Table @register="registerTable" @sorter-change="handleSorterChange">
       <template #toolbar>
         <n-button
           v-if="hasPermission('project:factory:create')"
