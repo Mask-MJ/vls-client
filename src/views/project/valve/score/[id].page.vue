@@ -21,7 +21,7 @@ function digui(data: any) {
 }
 
 function getScoreType(score: number) {
-  if (score >= 90) {
+  if (score >= 85) {
     return 'success'
   } else if (score >= 60) {
     return 'warning'
