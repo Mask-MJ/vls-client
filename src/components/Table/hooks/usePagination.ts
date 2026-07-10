@@ -29,6 +29,8 @@ export function usePagination(refProps: ComputedRef<BasicTableProps>) {
       pageSizes: PAGE_SIZE_OPTIONS,
       showSizePicker: true,
       showQuickJumper: true,
+      // 任务 12: 页面底部显示"共 X 条", 全局列表统一
+      prefix: ({ itemCount }: { itemCount?: number }) => `共 ${itemCount ?? 0} 条`,
       ...(isBoolean(pagination) ? {} : pagination),
       ...unref(configRef)
     }
